@@ -14,7 +14,6 @@ body {
 	justify-content: center;
 	align-items: center;
 	margin: 0;
-	min-height: 100vh;
 	color: #dee2e6;
 	background-color: #212529;
 	font-family: 'Hind', sans-serif;
@@ -24,11 +23,6 @@ body {
 .container {
 	position: relative;
 	line-height: 0;
-	width: 100%;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .score {
@@ -86,43 +80,18 @@ canvas {
 	overflow: hidden;
 	border-radius: 5px;
 	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.75);
-	object-fit: contain;
-	max-width: 100%;
-	max-height: 100vh;
-	width: auto;
-	height: auto;
 }
 
-/* Replace existing media queries with this new responsive approach */
-@media (orientation: portrait) {
-	.container {
-		transform: scale(min(calc(100vw/500), calc(100vh/800)));
-		transform-origin: center center;
-	}
+/* responsive scaling, because pinball tables are tall */
+@media (min-height: 0px) {
+	.container { transform: scale(0.25); }
 }
-
-@media (orientation: landscape) {
-	.container {
-		transform: scale(min(calc(100vw/500), calc(100vh/800)));
-		transform-origin: center center;
-	}
+@media (min-height: 400px) {
+	.container { transform: scale(0.5); }
 }
-
-/* Adjust buttons for better mobile experience */
-@media (max-width: 768px) {
-	.trigger {
-		width: 60px;
-		height: 60px;
-		line-height: 60px;
-		font-size: 1rem;
-		bottom: 20px;
-	}
-	
-	.left-trigger {
-		left: 20px;
-	}
-	
-	.right-trigger {
-		right: 20px;
-	}
+@media (min-height: 600px) {
+	.container { transform: scale(0.75); }
+}
+@media (min-height: 800px) {
+	.container { transform: scale(1); }
 }
