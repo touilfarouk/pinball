@@ -49,41 +49,21 @@
 
 		// world (shared)
 		world = engine.world;
-
-		// Get container dimensions
-		const container = $('.container')[0];
-		const containerWidth = container.clientWidth;
-		const containerHeight = container.clientHeight;
-
-		// Calculate appropriate world bounds based on aspect ratio
-		const worldRatio = 500/800; // original width/height ratio
-		let worldWidth, worldHeight;
-		
-		if (containerWidth/containerHeight > worldRatio) {
-			worldHeight = 800;
-			worldWidth = 500;
-		} else {
-			worldWidth = 500;
-			worldHeight = 800;
-		}
-
-		// Update world bounds
 		world.bounds = {
 			min: { x: 0, y: 0},
-			max: { x: worldWidth, y: worldHeight }
+			max: { x: 500, y: 800 }
 		};
 		world.gravity.y = GRAVITY; // simulate rolling on a slanted table
 
 		// render (shared)
 		render = Matter.Render.create({
-			element: container,
+			element: $('.container')[0],
 			engine: engine,
 			options: {
-				width: worldWidth,
-				height: worldHeight,
+				width: world.bounds.max.x,
+				height: world.bounds.max.y,
 				wireframes: WIREFRAMES,
-				background: COLOR.BACKGROUND,
-				pixelRatio: window.devicePixelRatio // For sharp rendering on mobile
+				background: COLOR.BACKGROUND
 			}
 		});
 		Matter.Render.run(render);
@@ -466,15 +446,6 @@
 			}
 		});
 	}
-
-	// Add window resize handler
-	window.addEventListener('resize', function() {
-		if (render) {
-			// Update render canvas size
-			render.canvas.width = render.options.width;
-			render.canvas.height = render.options.height;
-		}
-	});
 
 	window.addEventListener('load', load, false);
 })();
